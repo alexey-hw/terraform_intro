@@ -1,0 +1,7 @@
+package_update: true
+runcmd:
+  - wget https://github.com/alexey-hw/terraform_intro/releases/download/step2/terraform_test_app.jar
+  - java -Dspring.datasource.url=jdbc:mysql://${hostname}:${port}/${database} -Dspring.datasource.username=${user} -Dspring.datasource.password=${password} -jar terraform_test_app.jar
+packages:
+  - wget
+  - openjdk-16-jre-headless

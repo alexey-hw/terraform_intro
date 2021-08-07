@@ -1,23 +1,21 @@
-provider "aws" {
-  profile = "tf-user"
-  region  = "us-west-2"
+module "network" {
+  source     = "./modules/network"
+  namespace  = var.namespace
+  my_ip_cidr = var.my_ip_cidr
 }
 
-data "aws_ami" "ubuntu" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
-  }
-
-  owners = ["099720109477"]
+module "application" {
+  source      = "./modules/application"
+  namespace   = var.namespace
+  sg_id       = module.network.sg_id
+  vpc         = module.network.vpc
+  ssh_keypair = var.ssh_keypair
+  db_config   = module.database.db_config
 }
 
-resource "aws_instance" "helloworld" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
-  tags = {
-    Name = "HelloWorld"
-  }
+module "database" {
+  source    = "./modules/database"
+  namespace = var.namespace
+  sg_id     = module.network.sg_id
+  vpc       = module.network.vpc
 }

@@ -1,3 +1,21 @@
+#intelih idea
 .idea
-.terraform
+#terraform
+**/.terraform/*
 *.tfstate*
+*.tfvars
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+#gradle
+**/build/
+**/.gradle/
+terraform_test_app/gradle/*
+!terraform_test_app/gradle/wrapper/
+*terraform_test_app/gradle/wrapper/*
+!terraform_test_app/gradle/wrapper/gradle-wrapper.jar
+!terraform_test_app/gradle/wrapper/gradle-wrapper.properties
